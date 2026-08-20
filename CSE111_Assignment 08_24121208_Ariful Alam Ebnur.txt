@@ -1,0 +1,325 @@
+Lab 8
+
+
+TASK 1
+public class Moth extends Caterpillar{
+
+    public Moth (String food, int age){
+        super(food, age);
+        energy=0;
+    }
+
+    
+    public void transform() {
+        System.out.println("Caterpillar transforms into Moth");
+    }
+
+    public void eat (int food){
+        if(food>0){
+            energy+=(food*2.5);
+            energy-=2.5;
+            System.out.println("Moth lost energy due to nocturnal\n" +
+                    "activity");
+        }
+    }
+    public void showDetails (){
+        System.out.println("Food: " + food);
+        System.out.println("Age: " + age);
+        System.out.println("Energy: " + energy+ " joules");
+    }
+}
+
+public class Butterfly extends Caterpillar {
+
+
+    public Butterfly (String food, int age )
+    {
+        super(food, age);
+        energy=0;
+    }
+
+    public void transform (){
+        System.out.println("Caterpillar transforms into Butterfly");
+    }
+
+    public void eat (int food){
+        if (food>0){
+            energy+=(food*5);
+            energy-=5;
+            System.out.println("Butterfly lost energy while\n" +
+                    "flying and absorbed nectar");
+        }
+    }
+
+    public void showDetails (){
+        System.out.println("Food: " + food);
+        System.out.println("Age: " + age);
+        System.out.println("Energy: " + energy+ " joules");
+    }
+}
+
+
+Task 2
+public class Concert {
+    private String venue;
+    private String showtime;
+    private String[] artists;
+    private int artistCount;
+    private int ticketsSold;
+    private static int totalTicketsSold = 0;
+
+    public Concert(String venue, String showtime) {
+        this.venue = venue;
+        this.showtime = showtime;
+        this.artists = new String[5];
+        this.artistCount = 0;
+        this.ticketsSold = 0;
+    }
+
+    public void addArtist(String artistName) {
+        if (artistCount < 5) {
+            artists[artistCount] = artistName;
+            artistCount++;
+        }
+    }
+
+    public void buyTicket(String zone, int quantity) {
+        int price = 0;
+        if (zone.equals("A")) {
+            price = 500;
+        } else if (zone.equals("B")) {
+            price = 1000;
+        }
+
+        System.out.println("Total price: " + (price * quantity));
+        ticketsSold += quantity;
+        totalTicketsSold += quantity;
+    }
+
+    public void buyTicket(String zone) {
+        buyTicket(zone, 1);
+    }
+
+    public void showDetails() {
+        System.out.println("Venue: " + venue);
+        System.out.println("Showtime: " + showtime);
+        System.out.print("Artist:");
+
+        if (artistCount == 0) {
+            System.out.println();
+        } else {
+            System.out.println();
+            for (int i = 0; i < artistCount; i++) {
+                System.out.println("-" + artists[i]);
+            }
+        }
+        System.out.println("Tickets sold in this concert: " + ticketsSold);
+    }
+
+    public static void showTotalTicketSold() {
+        System.out.println("total tickets sold (all venus): " + totalTicketsSold);
+    }
+}
+
+
+
+public class VIPConcert extends Concert
+{
+    public VIPConcert(String venue, String showtime) {
+        super(venue, showtime);
+    }
+
+    public void buyTicket() {
+        System.out.println("Total price: 2000");
+        ticketsSold += 1;
+        totalTicketsSold += 1;
+    }
+}
+
+
+
+
+
+TASK 3
+
+public class BikeDriver extends  GenericDriver{
+    private String sub;
+    public static String[] restrictedAreas = new String[0];
+
+    public BikeDriver (String name, String sub){
+        super(name);
+        this.sub=sub;
+    }
+    public String toString (){
+        return getName()+"'s driver profile is "+sub;
+    }
+    public String acceptRide (boolean hasVehicle){
+
+       return super.acceptRide(false) + "\n"+ toString();
+    }
+
+    public static void restrictedAreas(String area) {
+        String[] newArray = new String[restrictedAreas.length+1];
+        for (int i = 0; i < restrictedAreas.length; i++) {
+            newArray[i] = restrictedAreas[i];
+        }
+        newArray[restrictedAreas.length] = area;
+        restrictedAreas = newArray;
+    }
+
+    public void fightRestriction (String [] area){
+        for (int i=0; i<area.length; i++){
+            if (area[i].equals("Defense Area")){
+                System.out.println(getName()+" cannot enter Defence Area");
+            }
+            if (area[i].equals("Banani")){
+                System.out.println(getName()+" can enter Banani");
+            }
+            if (area[i].equals("Uttara")){
+                System.out.println(getName()+" can enter Uttara");
+            }
+        }
+    }
+}
+
+
+public class CarDriver extends GenericDriver{
+    public static String[] restrictedAreas = new String[0];
+
+    public CarDriver (String name){
+        super (name);
+
+    }
+    public String toString (){
+        return getName()+ "'s driver profile is a Premium";
+    }
+    public void hasSafetyTraining (){
+        super.hasSafetyTraining();
+        System.out.println("Premium drivers receive extra safety\n" +
+                "briefings.");
+    }
+    public String acceptRide (boolean hasVehicle) {
+        return super.acceptRide(true) + "\n"+ toString();
+    }
+
+    public static void restrictedAreas (String area){
+        String[] newArray = new String[restrictedAreas.length+1];
+        for (int i = 0; i < restrictedAreas.length; i++) {
+            newArray[i] = restrictedAreas[i];
+        }
+        newArray[restrictedAreas.length] = area;
+        restrictedAreas = newArray;
+    }
+
+    public void fightRestriction (String [] add){
+        for (int i=0; i<add.length; i++){
+            if (add[i].equals("Defense Area")){
+                System.out.println(getName()+" can enter Defence Area");
+            }
+            if (add[i].equals("Road 27")){
+                System.out.println(getName()+" cannot enter Road 27");
+            }
+        }
+    }
+}
+
+
+
+
+
+
+TASK 4
+
+public class Car extends Vehicle {
+    private int seats;
+    private static int totaCar = 0;
+    public static Car[] car = new Car[10];
+
+    public Car(String model, int price, int seats) {
+        super(model, price);
+        this.seats = seats;
+
+
+        totaCar++;
+        if (totaCar == 1) {
+            vehicleId = "CAR001";
+        } else if (totaCar == 2) {
+            vehicleId = "CAR002";
+        } else if (totaCar == 3) {
+            vehicleId = "CAR003";
+        }
+
+        System.out.println("Vehicle ID: " + vehicleId + " created");
+
+
+        car[totaCar - 1] = this;
+    }
+
+    
+    public void vehicleDetail() {
+        super.vehicleDetail();
+        System.out.println("Type: Regular Car");
+        System.out.println("Seats: " + seats);
+    }
+
+    public static void showAllAvailableCars() {
+        System.out.println("Total Car: " + totaCar);
+        System.out.println("Available Cars: ");
+        for (int i = 0; i < totaCar; i++) {
+            if (car[i] != null && !car[i].sold) {
+                System.out.println(car[i].vehicleId + " : " + car[i].model);
+            }
+        }
+    }
+
+    public static void markAsSold(Car c) {
+        c.sold = true;
+    }
+
+    public static void showAllCars() {
+        System.out.println("Total Car: " + totaCar);
+        for (int i = 0; i < totaCar; i++) {
+            if (car[i] != null) {
+                System.out.print(car[i].vehicleId + " : " + car[i].model);
+                if (car[i].sold) {
+                    System.out.println(" - sold");
+                } else {
+                    System.out.println(" - available");
+                }
+            }
+        }
+    }
+}
+
+public class ElectricCar extends Vehicle {
+    private int batteryCapacity;
+    private static int totalEV = 0;
+
+    public ElectricCar(String model, int price, int batteryCapacity) {
+        super(model, price);
+        this.batteryCapacity = batteryCapacity;
+
+       totalEV++;
+
+        if (totalEV < 10) {
+            vehicleId = "EV00" + totalEV;  
+        } else if (totalEV < 100) {
+            vehicleId = "EV0" + totalEV;  
+        } else {
+            vehicleId = "EV" + totalEV;    
+        }
+
+        System.out.println("Vehicle ID: " + vehicleId + " created");
+    }
+
+
+    public void vehicleDetail() {
+        super.vehicleDetail();
+        System.out.println("Type: Electric Vehicle");
+        System.out.println("Battery Capacity: " + batteryCapacity + " kWh");
+    }
+
+    public static void markAsSoldEV(ElectricCar ev) {
+        ev.sold = true;
+    }
+}
